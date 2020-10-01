@@ -60,12 +60,10 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
 
     (<any>window).test = {
       test1: function(item:any){
-        alert('test')
+        alert('test');
         this._showDetails(item);
       }
-    }
-
-
+    };
 
     //Render		
     if (data.length > 0) {
@@ -86,19 +84,13 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
     const root: Element = this.domElement.querySelector('#spListContainer');
     
     root.innerHTML = html;
-
-    // $(document).on('click', '.bbBroadcastSeverity', function (e) {
-    jQuery('[class^="bbBroadcastSeverity"]').each((indext,elment)=>{
-      var spItem = jQuery(elment).data('spitem');
-      console.log(spItem);
-      // sthis._showDetails(spItem)
-    })
-    /*
-    .addEventListener('click', () => {   
-      alert("Btn Clicked!!!");
-    });
-    */
-    
+    var self = this;
+    $( '[class^="bbBroadcastSeverity"]' ).each(function(index) {
+      $(this).on("click", function(){
+          var spItem = $(this).data('spitem');
+          self._showDetails(spItem);        
+      });
+    });    
   }
 
   private _renderItems(data: ISPListItem[]): string {
@@ -121,7 +113,7 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
               data-id="${item.Id}" 
               data-title="${item.Title}" 
               style="border-left-color:${categoryColour}"
-              onclick="window.test.test1()"
+             
               >
             <div class="${styles.bbBroadcastSeverity}"
                 data-spItem='${escape(JSON.stringify(item))}'
@@ -134,8 +126,6 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
           </div>
         </li>
         `;        
-
-        // this._showDetails(item);
     });
     return html;
   }
@@ -147,89 +137,15 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
       this._getListData()
         .then((response) => {              
           this._renderData(option, response.value);
-
-          //Generate List Display Html
-          // let html: string = '';
-          // html += `
-          // <div class="${styles.bbBroadcastContentDisplay}">
-          // ${this._renderItems(response.value)}
-          // </div>
-          // `;
-          //Attach OnClick to Counter
-          var $root = jQuery(".bbBroadcastCountLink");
-          //const root: Element = this.domElement.querySelector('.bbBroadcastCountLink');
-
-          // $root.find('.bbBroadcastCountLink').on('click', function () { this._counterOnClick(html.join('')) });
-          // bbw.Wait(100, function () { return Bluebox.Presentation }, function () {
-          //     Bluebox.Presentation.Execute($root);
-          // });
-          //Apply vTicker
-          // bbw.Wait(100, function () { return  }, function () {
-               //$root.find('.bbBroadcastContentTicker').jQuery.fn.vTicker({ height: 45 });
-          // })
-
-
-          //this._renderList(response.value);
         });
   }
 
-  // private _counterOnClick(html:any): void {
-  //   var opt = {
-  //       title: "Broadcast Announcements",
-  //       width: 1200,
-  //       allowMaximize: true,
-  //       html: jQuery(html)[0],
-  //       //html: jQuery('.bbBroadcastContent')[0]["innerHTML"],
-  //       dialogReturnValueCallback: function (result, values) {
-  //       }
-  //   };
+  private _showDetails(item): void { 
 
-  //   SP.SOD.execute("sp.ui.dialog.js", "SP.UI.ModalDialog.showModalDialog", opt);
-
-  //   //Apply Expand OnClick
-  //   var $root = jQuery('.bbBroadcastContentDisplay');
-  //   Bluebox.Presentation.Execute($root);
-  // }
-
-
-  private _showDetails(item: ISPListItem): void { 
-    let html: string = '';
-    html +=  `<div>`;
-          html +=  `<div class="${styles.bbBroadcastItem}" style="color: ` + item.BBXCategoryStyle.BBXCatStyleColour + ` ; border-bottom: 5px solid ` + item.BBXCategoryStyle.BBXCatStyleColour + `">`;
-          
-            if (item.BBXCategoryStyle.BBXCatStyleImage != null) {
-              console.log("Image found");
-              html += `<img class="bbBulletinPopupImage" src="` + item.BBXCategoryStyle.BBXCatStyleImage + `"/>`;
-              html += `<div class="bbBulletinPopupCategory">`;
-            } else {
-              console.log("Image not found");
-              html += `<div class="bbBulletinPopupCategory--NoImage">`;
-            }
-        
-
-              html += item.BBXCategoryStyle.Title;
-              html += `</div>`;
-          html += `</div>`;
-
-          html += `<div class="${styles.bbBulletinPopupHeaderTitle}">`;            
-            html += `<div class="${styles.bbBulletinPopupTitle}">` + item.BBXCategoryStyle.Title + `</div>`;
-            html += `<div class="${styles.bbBulletinPopupPublishedDate}">publishedDate</div>`;
-            html += `<div class="bbBulletinPopupPublishedBy">By: ` + item.Editor.Title + `</div>`;
-          html += `</div>`;
-
-          html += `<div class="${styles.bbBulletinPopupContent}">` + item.Body + `</div>`;
-          html += `<input type="button" class="bbBulletinPopupHeaderTitle"  value="Submit">`;
-        html += `</div>`;
-
-
-    console.log("Inside", html);
     const dialog: CustomDialog = new CustomDialog();  
     dialog.item = item;  
-    dialog.html = html;
       
-    dialog.show().then(() => {  
-      Dialog.alert(`Message from Custom Dailog-->` + dialog.paramFromDailog);  
-    });  
+    dialog.show(); 
 }
   public render(): void { 
     this.domElement.innerHTML = `
@@ -240,12 +156,11 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
       </div>`;
       this._renderListAsync();
   }
-
-  /*
+  
   protected get dataVersion(): Version {
     return Version.parse('1.0');
   }
-*/
+
   protected getPropertyPaneConfiguration(): IPropertyPaneConfiguration {
     return {
       pages: [
