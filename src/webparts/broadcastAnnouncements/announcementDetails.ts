@@ -1,8 +1,7 @@
 import { BaseDialog, IDialogConfiguration } from '@microsoft/sp-dialog';
-import { ISPListItem } from './BroadcastAnnouncementsWebPart';
 import styles from './BroadcastAnnouncementsWebPart.module.scss';
 
-export default class CustomDialog extends BaseDialog {  
+export default class AnnouncementDetailsDialog extends BaseDialog {  
     public item: any;
 
     public render(): void {  

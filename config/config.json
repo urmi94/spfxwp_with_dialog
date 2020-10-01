@@ -18,7 +18,7 @@
     },
    "jqueryvticker": {
     "path": "https://blueboxsolutionsdev.sharepoint.com/teams/devs_318_bbstyling/_catalogs/masterpage/Bluebox/ext/jqueryvticker/jquery.vticker.min.js",
-    "globalName": "jqueryvticker",
+    "globalName": "jQuery.vTicker",
     "globalDependencies": ["jquery"]
     }
   },

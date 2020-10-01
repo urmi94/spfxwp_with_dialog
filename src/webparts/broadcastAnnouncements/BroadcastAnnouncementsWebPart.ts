@@ -1,8 +1,5 @@
 import { Version } from '@microsoft/sp-core-library';
-import {
-  IPropertyPaneConfiguration,
-  PropertyPaneTextField
-} from '@microsoft/sp-property-pane';
+import {  IPropertyPaneConfiguration,  PropertyPaneTextField} from '@microsoft/sp-property-pane';
 import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import { escape } from '@microsoft/sp-lodash-subset';
 
@@ -10,13 +7,10 @@ import styles from './BroadcastAnnouncementsWebPart.module.scss';
 import * as strings from 'BroadcastAnnouncementsWebPartStrings';
 import {  SPHttpClient, SPHttpClientResponse} from '@microsoft/sp-http';  
 import * as $ from 'jquery';
-import { Dialog } from '@microsoft/sp-dialog';
 import CustomDialog from './announcementDetails';
-//import vticker from 'vticker';
+import AnnouncementDetailsDialog from './announcementDetails';
+import AnnouncementListDialog from './announcementList';
 
-declare var window: any;
-
-let currentItem: ISPListItem = null;
 
 export interface IBroadcastAnnouncementsWebPartProps {
   description: string;
@@ -38,7 +32,7 @@ export interface ISPListItem {
   Editor: {
     Title: string;
   };
-  BroadcastPublishedDate: any;
+  BroadcastPublishedDate: string;
 }
 
 export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart<IBroadcastAnnouncementsWebPartProps>  {
@@ -58,13 +52,6 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
     let html: string = '';
     let renderItemsHtml = this._renderItems(data);
 
-    (<any>window).test = {
-      test1: function(item:any){
-        alert('test');
-        this._showDetails(item);
-      }
-    };
-
     //Render		
     if (data.length > 0) {
       html += `
@@ -82,16 +69,23 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
         `;
     }
     const root: Element = this.domElement.querySelector('#spListContainer');
-    
     root.innerHTML = html;
+
+    //On click dialog
     var self = this;
-    $( '[class^="bbBroadcastSeverity"]' ).each(function(index) {
+    $( "[class^='bbBroadcastSeverity'], [class^='bbBroadcastTitle']" ).each(function(index) {
       $(this).on("click", function(){
           var spItem = $(this).data('spitem');
-          self._showDetails(spItem);        
+          self._showAnnouncementDetails(spItem);        
       });
-    });    
+    }); 
+    
+    $( "[class^='bbBroadcastCount'], [class^='bbBroadcastCountLink']" ).on("click", function(){
+          self._showAnnouncementList(renderItemsHtml);        
+      });
+    
   }
+  
 
   private _renderItems(data: ISPListItem[]): string {
       let html: string = '';
@@ -103,8 +97,7 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
 
         html += `
         <li class="${styles.bbBroadcastItemContainer}">
-          <div class="${styles.bbBroadcastItem}" 
-              
+          <div class="${styles.bbBroadcastItem}"              
               data-themeKey="${dsCTTitle}" 
               data-themeKeyColour="${categoryColour}" 
               data-themeKeyImage="${categoryImage}" 
@@ -113,14 +106,14 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
               data-id="${item.Id}" 
               data-title="${item.Title}" 
               style="border-left-color:${categoryColour}"
-             
+              
               >
             <div class="${styles.bbBroadcastSeverity}"
-                data-spItem='${escape(JSON.stringify(item))}'
-            >
+              data-spItem='${escape(JSON.stringify(item))}'>
               ${categoryTitle}
             </div>
-            <div class="${styles.bbBroadcastTitle}">
+            <div class="${styles.bbBroadcastTitle}"
+              data-spItem='${escape(JSON.stringify(item))}'>
               ${item.Title}
             </div>
           </div>
@@ -140,13 +133,21 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
         });
   }
 
-  private _showDetails(item): void { 
+  private _showAnnouncementDetails(item): void { 
 
-    const dialog: CustomDialog = new CustomDialog();  
+    const dialog: AnnouncementDetailsDialog = new AnnouncementDetailsDialog();  
     dialog.item = item;  
       
     dialog.show(); 
-}
+  }
+
+  private _showAnnouncementList(renderItemsHtml): void { 
+
+    const dialog: AnnouncementListDialog = new AnnouncementListDialog();  
+    dialog.renderItemsHtml = renderItemsHtml;  
+    
+    dialog.show(); 
+  }
   public render(): void { 
     this.domElement.innerHTML = `
       <div class="${ styles.broadcastAnnouncements }">
