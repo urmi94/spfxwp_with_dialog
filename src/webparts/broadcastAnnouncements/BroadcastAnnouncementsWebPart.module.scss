@@ -1,0 +1,363 @@
+@import '~@microsoft/sp-office-ui-fabric-core/dist/sass/SPFabricCore.scss';
+
+.broadcastAnnouncements {
+  .container {
+    max-width: 700px;
+    margin: 0px auto;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  .row {
+    // @include ms-Grid-row;
+    // @include ms-fontColor-white;
+    // background-color: $ms-color-themeDark;
+    // padding: 20px;
+    display: table;
+  }
+
+  .column {
+    // @include ms-Grid-col;
+    // @include ms-lg10;
+    // @include ms-xl8;
+    // @include ms-xlPush2;
+    // @include ms-lgPush1;
+    display: table-cell;
+  }
+
+  .title {
+    @include ms-font-xl;
+    @include ms-fontColor-white;
+  }
+
+  .subTitle {
+    @include ms-font-l;
+    @include ms-fontColor-white;
+  }
+
+  .description {
+    @include ms-font-l;
+    @include ms-fontColor-white;
+  }
+
+  .button {
+    // Our button
+    text-decoration: none;
+    height: 32px;
+
+    // Primary Button
+    min-width: 80px;
+    background-color: $ms-color-themePrimary;
+    border-color: $ms-color-themePrimary;
+    color: $ms-color-white;
+
+    // Basic Button
+    outline: transparent;
+    position: relative;
+    font-family: "Segoe UI WestEuropean","Segoe UI",-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-size: $ms-font-size-m;
+    font-weight: $ms-font-weight-regular;
+    border-width: 0;
+    text-align: center;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0 16px;
+
+    .label {
+      font-weight: $ms-font-weight-semibold;
+      font-size: $ms-font-size-m;
+      height: 32px;
+      line-height: 32px;
+      margin: 0 4px;
+      vertical-align: top;
+      display: inline-block;
+    }
+  }
+
+  .list {
+    color: #333333;
+    font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    box-sizing: border-box;
+    margin: 10;
+    padding: 10;
+    line-height: 50px;
+    list-style-type: none;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  }
+  
+  .listItem {
+    color: #333333;
+    vertical-align: center;
+    font-family: 'Segoe UI Regular WestEuropean', 'Segoe UI', Tahoma, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    *zoom: 1;
+    padding: 9px 28px 3px;
+    position: relative;
+  }
+
+  .bb-broadcast .bb-title, .bb-broadcast .bb-value {
+    display: inline-block;
+    padding: 8px 10px;
+    text-align: center;
+    font-size: 1.2em;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.bb-broadcast .bb-title {
+    width: 15%;
+}
+
+.bb-broadcast .bb-value {
+    width: 85%;
+}
+
+.bb-broadcast .fa {
+    margin-right: 5px;
+}
+
+.bb-broadcase .emergency {
+    font-weight: bold;
+}
+/* Remove WebPart Content Padding */
+div.ms-webpartzone-cell.bb-broadcast-nopadding [webpartid] {
+    padding: 0;
+    border-style: none;
+}
+/* Stack the title and value on tablet and smaller. */
+@media (max-width: 1024px) {
+    .bb-broadcast .bb-title,
+    .bb-broadcast .bb-value {
+        width: 100%;
+        padding: 3px 10px;
+    }
+}
+
+/* Font Size */
+.bbBroadcast, .bbBroadcastContentDisplay {
+    font-size: 16px;
+    width: 100%;
+}
+
+/* Link Style*/
+.bbBroadcastCountLink, .bbBroadcastCountLink:hover {
+    text-decoration: none;
+}
+
+.bbBroadcastCountLink:hover, .bbBroadcastItemLink:hover {
+    cursor: pointer;
+    background-color: #999999;
+}
+
+.bbBroadcastCount {
+    display: inline-block;
+    vertical-align: top;
+    text-align: center;
+    line-height: 45px;
+    background-color: #555;
+    color: white;
+}
+
+.bbBroadcastCountLink {
+    display: block;
+    width: 90px;
+}
+
+    .bbBroadcastCountLink i {
+        margin-right: 5px;
+    }
+
+.bbBroadcastContentTicker {
+    display: inline-block;
+    width: calc(100% - 90.5px);
+    vertical-align: top;
+}
+
+.bbBroadcastContent {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.bbBroadcastContent ul, .bbBroadcastContentDisplay ul {
+width: 100%;
+margin: 0;
+padding: 0;
+}
+
+.bbBroadcastItemContainer {
+    list-style: none;
+}
+
+.bbBroadcastItem {
+    border-width: 0 0 0 5px;
+    border-style: solid;
+    border-color: transparent;
+    height: 45px;
+    cursor: pointer;
+}
+
+.bbBroadcastSeverity {
+    display: table-cell;
+    padding: 10px 20px;
+    min-width: 130px;
+    box-sizing: border-box;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: #75767e;
+    color: white;
+}
+
+.bbBroadcastTitle {
+    display: table-cell;
+    padding: 10px;
+    width: 100%;
+    height: 45px;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: #888888;
+    color: white;
+}
+
+.bbBroadcastDescription {
+    transition: height 0.367s cubic-bezier(0.1, 0.9, 0.2, 1); /* Microsoft Fabric */
+}
+
+.bbBroadcastExpandButton {
+    display: table-cell;
+    padding: 0 15px 0 20px;
+    letter-spacing: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 45px;
+}
+
+.bbBroadcastContentDisplay .bbBroadcastItemContainer {
+    margin-bottom: 10px;
+}
+
+.bbBroadcastContentDisplay .bbBroadcastItem,
+.bbBroadcastContentDisplay .bbBroadcastTitle {
+    height: auto;
+}
+
+//Popup CSS
+.bbBulletinPopupHeader {
+    position: relative;
+    border-width: 1px 1px 5px 1px;
+    border-style: solid;
+    border-color: #DDD;
+    height: 120px;
+}
+
+.bbBulletinPopupHeaderTitle, .bbBulletinPopupContent {
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    border-color: #DDD;
+    padding: 20px;
+}
+
+.bbBulletinPopupImage {
+    display: block;
+    max-height: 120px;
+}
+
+.bbBulletinPopupCategory, .bbBulletinPopupCategory--NoImage {
+    font-family: "BlueboxContentTitle";
+    font-size: 30px;
+    line-height: 1;
+}
+
+.bbBulletinPopupCategory {
+    position: absolute;
+    top: 45px;
+    left: 20px;
+}
+
+.bbBulletinPopupCategory--NoImage {
+    padding-left: 20px;
+    line-height: 120px;
+}
+
+.bbBulletinPopupPublishedDate {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-family: "BlueboxContentTitle";
+    color: gray;
+    font-weight: bold;
+}
+
+.bbBulletinPopupTitle {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: "BlueboxContentTitle";
+    margin-bottom: 5px;
+}
+
+//Bulletin Popup
+.bbBulletinPopupHeader {
+    position: relative;
+    border-width: 1px 1px 5px 1px;
+    border-style: solid;
+    border-color: #DDD;
+    height: 120px;
+}
+
+.bbBulletinPopupHeaderTitle, .bbBulletinPopupContent {
+    border-width: 0 1px 1px 1px;
+    border-style: solid;
+    border-color: #DDD;
+    padding: 20px;
+}
+
+.bbBulletinPopupImage {
+    display: block;
+    max-height: 120px;
+}
+
+.bbBulletinPopupCategory, .bbBulletinPopupCategory--NoImage {
+    font-family: "BlueboxContentTitle";
+    font-size: 30px;
+    line-height: 1;
+}
+
+.bbBulletinPopupCategory {
+    position: absolute;
+    top: 45px;
+    left: 20px;
+}
+
+.bbBulletinPopupCategory--NoImage {
+    padding-left: 20px;
+    line-height: 120px;
+}
+
+.bbBulletinPopupPublishedDate {
+    font-size: 12px;
+    text-transform: uppercase;
+    font-family: "BlueboxContentTitle";
+    color: gray;
+    font-weight: bold;
+}
+
+.bbBulletinPopupTitle {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: "BlueboxContentTitle";
+    margin-bottom: 5px;
+}
+
+
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
+  "version": "2.0",
+  "bundles": {
+    "broadcast-announcements-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/broadcastAnnouncements/BroadcastAnnouncementsWebPart.js",
+          "manifest": "./src/webparts/broadcastAnnouncements/BroadcastAnnouncementsWebPart.manifest.json"
+        }
+      ]
+    }
+  },
+  "externals": {
+    "jquery": {
+      "path": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js",
+      "globalName": "jQuery"
+    },
+   "jqueryvticker": {
+    "path": "https://blueboxsolutionsdev.sharepoint.com/teams/devs_318_bbstyling/_catalogs/masterpage/Bluebox/ext/jqueryvticker/jquery.vticker.min.js",
+    "globalName": "jqueryvticker",
+    "globalDependencies": ["jquery"]
+    }
+  },
+  "localizedResources": {
+    "BroadcastAnnouncementsWebPartStrings": "lib/webparts/broadcastAnnouncements/loc/{locale}.js"
+  }
+}
