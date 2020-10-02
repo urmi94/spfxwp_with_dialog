@@ -7,10 +7,13 @@ import styles from './BroadcastAnnouncementsWebPart.module.scss';
 import * as strings from 'BroadcastAnnouncementsWebPartStrings';
 import {  SPHttpClient, SPHttpClientResponse} from '@microsoft/sp-http';  
 import * as $ from 'jquery';
-import CustomDialog from './announcementDetails';
+require('jQuery.vTicker');
+
 import AnnouncementDetailsDialog from './announcementDetails';
 import AnnouncementListDialog from './announcementList';
 
+
+declare var jQuery:any;
 
 export interface IBroadcastAnnouncementsWebPartProps {
   description: string;
@@ -48,7 +51,8 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
         return response.json();
       });
   }
-  private _renderData(option:any, data: ISPListItem[]): void {
+
+  private _renderData(data: ISPListItem[]): void {
     let html: string = '';
     let renderItemsHtml = this._renderItems(data);
 
@@ -62,7 +66,8 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
               ${data.length}
             </a>
           </div>
-          <div class="${styles.bbBroadcastContentTicker} ${styles.column}">
+          <div id="bbBroadcastContentTicker"
+             class="${styles.bbBroadcastContentTicker} ${styles.column}">
             <ul class="${styles.bbBroadcastContent}">` + renderItemsHtml + `</ul>
           </div>
         </div>
@@ -70,7 +75,7 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
     }
     const root: Element = this.domElement.querySelector('#spListContainer');
     root.innerHTML = html;
-
+    
     //On click dialog
     var self = this;
     $( "[class^='bbBroadcastSeverity'], [class^='bbBroadcastTitle']" ).each(function(index) {
@@ -80,12 +85,14 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
       });
     }); 
     
-    $( "[class^='bbBroadcastCount'], [class^='bbBroadcastCountLink']" ).on("click", function(){
+    $( "[class^='bbBroadcastCount'], [class^='bbBroadcastCountLink']" ).on("click", () => {
           self._showAnnouncementList(renderItemsHtml);        
       });
-    
-  }
-  
+
+    //Apply vTicker
+    $( "[class^='bbBroadcastContentTicker']" ).on("load",jQuery('#bbBroadcastContentTicker').vTicker({ height: 45 }));
+      
+  }   
 
   private _renderItems(data: ISPListItem[]): string {
       let html: string = '';
@@ -124,12 +131,9 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
   }
   private _renderListAsync(): void {
 
-    var option = {
-      HtmlId: "bbBroadcast"
-    };
       this._getListData()
         .then((response) => {              
-          this._renderData(option, response.value);
+          this._renderData(response.value);
         });
   }
 
@@ -148,6 +152,7 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
     
     dialog.show(); 
   }
+
   public render(): void { 
     this.domElement.innerHTML = `
       <div class="${ styles.broadcastAnnouncements }">
@@ -155,7 +160,7 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
           <div id="spListContainer" />
         </div>
       </div>`;
-      this._renderListAsync();
+      this._renderListAsync();    
   }
   
   protected get dataVersion(): Version {

@@ -13,10 +13,10 @@
   },
   "externals": {
     "jquery": {
-      "path": "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js",
+      "path": "https://code.jquery.com/jquery-3.3.1.js",
       "globalName": "jQuery"
     },
-   "jqueryvticker": {
+   "jQuery.vTicker": {
     "path": "https://blueboxsolutionsdev.sharepoint.com/teams/devs_318_bbstyling/_catalogs/masterpage/Bluebox/ext/jqueryvticker/jquery.vticker.min.js",
     "globalName": "jQuery.vTicker",
     "globalDependencies": ["jquery"]
