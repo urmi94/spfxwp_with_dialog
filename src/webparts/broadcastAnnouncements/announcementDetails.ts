@@ -1,15 +1,23 @@
-import { BaseDialog, IDialogConfiguration } from '@microsoft/sp-dialog';
 import styles from './BroadcastAnnouncementsWebPart.module.scss';
+require("fabric");
+declare var fabric:any;
 
-export default class AnnouncementDetailsDialog extends BaseDialog {  
+export default class AnnouncementDetailsDialog{  
     public item: any;
 
-    public render(): void {  
+    public render(): void { 
+      
       let pubDate: Date = new Date(this.item.BroadcastPublishedDate);
-      var options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
-  
-      let html: string = '';
-      html +=  `<div class="${styles.broadcastAnnouncements}">`;
+      var options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' }; 
+        let html: string = '';
+        html +=  `
+          <button class="ms-Dialog-button ms-Dialog-buttonClose">
+            <i class="ms-Icon ms-Icon--Cancel"></i>
+          </button>
+        
+        <div class="ms-Dialog-title">Broadcast Announcement</div>
+        <div class="ms-Dialog-content">
+                <div class="${styles.broadcastAnnouncements}">`;
             html +=  `<div class="${styles.bbBulletinPopupHeader}" style="color: ` + this.item.BBXCategoryStyle.BBXCatStyleColour + ` ; border-bottom: 5px solid ` + this.item.BBXCategoryStyle.BBXCatStyleColour + `">`;
             
               if (this.item.BBXCategoryStyle.BBXCatStyleImage != null) {
@@ -20,8 +28,6 @@ export default class AnnouncementDetailsDialog extends BaseDialog {
                 console.log("Image not found");
                 html += `<div class="${styles["bbBulletinPopupCategory--NoImage"]}">`;
               }
-          
-  
                 html += this.item.BBXCategoryStyle.Title;
                 html += `</div>`;
             html += `</div>`;
@@ -33,18 +39,14 @@ export default class AnnouncementDetailsDialog extends BaseDialog {
             html += `</div>`;
   
             html += `<div class="${styles.bbBulletinPopupContent}">` + this.item.Body + `</div>`;
-          html += `</div>`;  
+          html += `</div>`; 
+        html += `</div>`;
 
-        this.domElement.innerHTML += html; 
-    }  
-  
-    public getConfig(): IDialogConfiguration {  
-      return {  
-        isBlocking: false  
-      };  
-    }  
-      
-    protected onAfterClose(): void {  
-      super.onAfterClose();       
-    }      
-  } 
+        const dialogDiv: Element = document.querySelector('.ms-Dialog');
+        dialogDiv.innerHTML = html;
+
+        //Create and open dialog
+        var dialogComponent = new fabric['Dialog'](dialogDiv);
+        dialogComponent.open();
+    }
+}

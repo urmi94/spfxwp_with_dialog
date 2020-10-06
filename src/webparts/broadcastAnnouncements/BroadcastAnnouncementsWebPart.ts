@@ -6,12 +6,13 @@ import { escape } from '@microsoft/sp-lodash-subset';
 import styles from './BroadcastAnnouncementsWebPart.module.scss';
 import * as strings from 'BroadcastAnnouncementsWebPartStrings';
 import {  SPHttpClient, SPHttpClientResponse} from '@microsoft/sp-http';  
+import { SPComponentLoader } from '@microsoft/sp-loader';
+
 import * as $ from 'jquery';
 require('jQuery.vTicker');
 
 import AnnouncementDetailsDialog from './announcementDetails';
 import AnnouncementListDialog from './announcementList';
-
 
 declare var jQuery:any;
 
@@ -138,11 +139,9 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
   }
 
   private _showAnnouncementDetails(item): void { 
-
     const dialog: AnnouncementDetailsDialog = new AnnouncementDetailsDialog();  
     dialog.item = item;  
-      
-    dialog.show(); 
+    dialog.render(); 
   }
 
   private _showAnnouncementList(renderItemsHtml): void { 
@@ -154,10 +153,20 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
   }
 
   public render(): void { 
+    //Loading Fabric JS - CSS
+    SPComponentLoader.loadCss('https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/css/fabric.components.min.css');
+    SPComponentLoader.loadCss('https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/css/fabric.min.css');
+    
     this.domElement.innerHTML = `
       <div class="${ styles.broadcastAnnouncements }">
         <div class="${ styles.container }">
-          <div id="spListContainer" />
+          <div id="spListContainer"></div>          
+        </div>
+        <div class="${ styles.container }">
+          <div id="customDialog">
+            <div class="ms-Dialog ms-Dialog--close ms-Dialog--blocking">
+            </div>
+          </div>          
         </div>
       </div>`;
       this._renderListAsync();    

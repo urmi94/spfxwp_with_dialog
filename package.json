@@ -15,10 +15,12 @@
     "@microsoft/sp-core-library": "1.11.0",
     "@microsoft/sp-dialog": "^1.11.0",
     "@microsoft/sp-lodash-subset": "1.11.0",
-    "@microsoft/sp-office-ui-fabric-core": "1.11.0",
+    "@microsoft/sp-office-ui-fabric-core": "^1.11.0",
     "@microsoft/sp-property-pane": "1.11.0",
     "@microsoft/sp-webpart-base": "1.11.0",
-    "@types/jquery": "^3.5.1"
+    "@pnp/spfx-controls-react": "2.0.0",
+    "@types/jquery": "^3.5.1",
+    "office-ui-fabric-js": "^1.5.0"
   },
   "devDependencies": {
     "@microsoft/sp-build-web": "1.11.0",

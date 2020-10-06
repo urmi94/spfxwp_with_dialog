@@ -20,9 +20,11 @@
     "path": "https://blueboxsolutionsdev.sharepoint.com/teams/devs_318_bbstyling/_catalogs/masterpage/Bluebox/ext/jqueryvticker/jquery.vticker.min.js",
     "globalName": "jQuery.vTicker",
     "globalDependencies": ["jquery"]
-    }
+    },
+    "fabric": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/js/fabric.min.js"
   },
   "localizedResources": {
-    "BroadcastAnnouncementsWebPartStrings": "lib/webparts/broadcastAnnouncements/loc/{locale}.js"
+    "BroadcastAnnouncementsWebPartStrings": "lib/webparts/broadcastAnnouncements/loc/{locale}.js",
+    "ControlStrings": "node_modules/@pnp/spfx-controls-react/lib/loc/{locale}.js"
   }
 }
