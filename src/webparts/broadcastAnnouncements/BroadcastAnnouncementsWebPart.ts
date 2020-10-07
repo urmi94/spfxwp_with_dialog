@@ -11,8 +11,8 @@ import { SPComponentLoader } from '@microsoft/sp-loader';
 import * as $ from 'jquery';
 require('jQuery.vTicker');
 
-import AnnouncementDetailsDialog from './announcementDetails';
-import AnnouncementListDialog from './announcementList';
+import AnnouncementDetailsDialog from './AnnouncementDetailsDialog';
+import AnnouncementListDialog from './AnnouncementListDialog';
 
 declare var jQuery:any;
 
@@ -82,7 +82,7 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
     $( "[class^='bbBroadcastSeverity'], [class^='bbBroadcastTitle']" ).each(function(index) {
       $(this).on("click", function(){
           var spItem = $(this).data('spitem');
-          self._showAnnouncementDetails(spItem);        
+          self.showAnnouncementDetails(spItem);        
       });
     }); 
     
@@ -138,7 +138,7 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
         });
   }
 
-  private _showAnnouncementDetails(item): void { 
+  public showAnnouncementDetails(item): void { 
     const dialog: AnnouncementDetailsDialog = new AnnouncementDetailsDialog();  
     dialog.item = item;  
     dialog.render(); 
@@ -147,9 +147,8 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
   private _showAnnouncementList(renderItemsHtml): void { 
 
     const dialog: AnnouncementListDialog = new AnnouncementListDialog();  
-    dialog.renderItemsHtml = renderItemsHtml;  
-    
-    dialog.show(); 
+    dialog.renderItemsHtml = renderItemsHtml;     
+    dialog.render(); 
   }
 
   public render(): void { 
@@ -163,11 +162,14 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
           <div id="spListContainer"></div>          
         </div>
         <div class="${ styles.container }">
-          <div id="customDialog">
-            <div class="ms-Dialog ms-Dialog--close ms-Dialog--blocking">
-            </div>
-          </div>          
+          <div id="bbAnnouncementList" class="ms-Dialog ms-Dialog--close ms-Dialog--blocking" style="max-width: max-content !important;">
+          </div>
         </div>
+        <div class="${ styles.container }">
+          <div id="bbAnnouncementDetail" class="ms-Dialog ms-Dialog--close ms-Dialog--blocking" style="width: 600px; max-width: none !important;">
+          </div>
+        </div>
+        
       </div>`;
       this._renderListAsync();    
   }

@@ -33,7 +33,7 @@ export default class AnnouncementDetailsDialog{
             html += `</div>`;
   
             html += `<div class="${styles.bbBulletinPopupHeaderTitle}">`;            
-              html += `<div class="${styles.bbBulletinPopupTitle}">` + this.item.BBXCategoryStyle.Title + `</div>`;
+              html += `<div class="${styles.bbBulletinPopupTitle}">` + this.item.Title + `</div>`;
               html += `<div class="${styles.bbBulletinPopupPublishedDate}">${pubDate.toLocaleDateString("en-AU", options)}</div>`;
               html += `<div class="bbBulletinPopupPublishedBy">By: ` + this.item.Editor.Title + `</div>`;
             html += `</div>`;
@@ -42,7 +42,7 @@ export default class AnnouncementDetailsDialog{
           html += `</div>`; 
         html += `</div>`;
 
-        const dialogDiv: Element = document.querySelector('.ms-Dialog');
+        const dialogDiv: Element = document.querySelector('#bbAnnouncementDetail');
         dialogDiv.innerHTML = html;
 
         //Create and open dialog
