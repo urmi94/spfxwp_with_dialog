@@ -8,14 +8,15 @@ export default class AnnouncementListDialog{
 
     public render(): void {   
       let html: string = '';
-      html +=  `<button class="ms-Dialog-button ms-Dialog-buttonClose">
-                  <i class="ms-Icon ms-Icon--Cancel"></i>
+      html +=  `
+                <button class="ms-Dialog-button ms-Dialog-buttonClose">
+                    <i class="ms-Icon ms-Icon--Cancel"></i>
                 </button>
                 
                 <div class="ms-Dialog-title">Broadcast Announcements</div>
                 <div class="ms-Dialog-content">
                       <div class="bbBroadcastContentContainer">
-                          <div class="${styles.bbBroadcastContentDisplay} ${styles.column}">
+                          <div class="${styles.bbBroadcastContentDisplay} ${styles.column}" style="min-width: 500px !important">
                               <ul class="${styles.bbBroadcastContent}">` + this.renderItemsHtml + `</ul>
                           </div>
                       </div>
