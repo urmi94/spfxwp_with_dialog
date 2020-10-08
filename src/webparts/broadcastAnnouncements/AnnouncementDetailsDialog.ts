@@ -17,28 +17,27 @@ export default class AnnouncementDetailsDialog{
         
         <div class="ms-Dialog-title">Broadcast Announcement</div>
         <div class="ms-Dialog-content">
-                <div class="${styles.broadcastAnnouncements}">`;
-            html +=  `<div class="${styles.bbBulletinPopupHeader}" style="color: ` + this.item.BBXCategoryStyle.BBXCatStyleColour + ` ; border-bottom: 5px solid ` + this.item.BBXCategoryStyle.BBXCatStyleColour + `">`;
+                <div class="broadcastAnnouncements">`;
+            html +=  `<div class="bbBulletinPopupHeader" style="color: ` + this.item.BBXCategoryStyle.BBXCatStyleColour + ` ; border-bottom: 5px solid ` + this.item.BBXCategoryStyle.BBXCatStyleColour + `">`;
             
               if (this.item.BBXCategoryStyle.BBXCatStyleImage != null) {
                 console.log("Image found");
-                html += `<img class="${styles.bbBulletinPopupImage}" src="` + this.item.BBXCategoryStyle.BBXCatStyleImage + `"/>`;
-                html += `<div class="${styles.bbBulletinPopupCategory}">`;
+                html += `<img class="bbBulletinPopupImage" src="` + this.item.BBXCategoryStyle.BBXCatStyleImage + `"/>`;
               } else {
                 console.log("Image not found");
-                html += `<div class="${styles["bbBulletinPopupCategory--NoImage"]}">`;
               }
+                html += `<div class="bbBulletinPopupCategory">`;
                 html += this.item.BBXCategoryStyle.Title;
                 html += `</div>`;
             html += `</div>`;
   
-            html += `<div class="${styles.bbBulletinPopupHeaderTitle}">`;            
-              html += `<div class="${styles.bbBulletinPopupTitle}">` + this.item.Title + `</div>`;
-              html += `<div class="${styles.bbBulletinPopupPublishedDate}">${pubDate.toLocaleDateString("en-AU", options)}</div>`;
+            html += `<div class="bbBulletinPopupHeaderTitle">`;            
+              html += `<div class="bbBulletinPopupTitle">` + this.item.Title + `</div>`;
+              html += `<div class="bbBulletinPopupPublishedDate">${pubDate.toLocaleDateString("en-AU", options)}</div>`;
               html += `<div class="bbBulletinPopupPublishedBy">By: ` + this.item.Editor.Title + `</div>`;
             html += `</div>`;
   
-            html += `<div class="${styles.bbBulletinPopupContent}">` + this.item.Body + `</div>`;
+            html += `<div class="bbBulletinPopupContent">` + this.item.Body + `</div>`;
           html += `</div>`; 
         html += `</div>`;
 

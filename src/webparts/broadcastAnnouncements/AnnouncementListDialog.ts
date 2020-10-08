@@ -16,8 +16,8 @@ export default class AnnouncementListDialog{
                 <div class="ms-Dialog-title">Broadcast Announcements</div>
                 <div class="ms-Dialog-content">
                       <div class="bbBroadcastContentContainer">
-                          <div class="${styles.bbBroadcastContentDisplay} ${styles.column}" style="min-width: 500px !important">
-                              <ul class="${styles.bbBroadcastContent}">` + this.renderItemsHtml + `</ul>
+                          <div class="bbBroadcastContentDisplay ${styles.column}" style="min-width: 500px !important">
+                              <ul class="bbBroadcastContent">` + this.renderItemsHtml + `</ul>
                           </div>
                       </div>
                 </div>

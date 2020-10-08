@@ -60,16 +60,19 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
     //Render		
     if (data.length > 0) {
       html += `
-        <div class="${styles.bbBroadcast} ${styles.row}">
-          <div class="${styles.bbBroadcastCount} ${styles.column}">
-            <a class="${styles.bbBroadcastCountLink}">
+        <div class="bbBroadcast ${styles.row}">
+          <div class="bbBroadcastCount ${styles.column}"
+            style="color: white;">
+            <a class="bbBroadcastCountLink"
+              onMouseOver="this.style.backgroundColor ='#999999'"
+              onMouseOut="this.style.backgroundColor ='#555'">
               <i class="fa fa-exclamation-triangle"></i>
               ${data.length}
             </a>
           </div>
-          <div id="bbBroadcastContentTicker"
-             class="${styles.bbBroadcastContentTicker} ${styles.column}">
-            <ul class="${styles.bbBroadcastContent}">` + renderItemsHtml + `</ul>
+          <div id="bbBroadcastContentTicker" style="width:100% !important"
+             class="bbBroadcastContentTicker ${styles.column}">
+            <ul class="bbBroadcastContent">` + renderItemsHtml + `</ul>
           </div>
         </div>
         `;
@@ -104,8 +107,8 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
         var dsCTTitle:string = "Broadcast Announcement";        
 
         html += `
-        <li class="${styles.bbBroadcastItemContainer}">
-          <div class="${styles.bbBroadcastItem}"              
+        <li class="bbBroadcastItemContainer">
+          <div class="bbBroadcastItem"              
               data-themeKey="${dsCTTitle}" 
               data-themeKeyColour="${categoryColour}" 
               data-themeKeyImage="${categoryImage}" 
@@ -113,15 +116,20 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
               data-rowtype="Broadcast" 
               data-id="${item.Id}" 
               data-title="${item.Title}" 
-              style="border-left-color:${categoryColour}"
-              
+              style="border-left-color:${categoryColour}"              
               >
-            <div class="${styles.bbBroadcastSeverity}"
-              data-spItem='${escape(JSON.stringify(item))}'>
+            <div class="bbBroadcastSeverity"
+              data-spItem='${escape(JSON.stringify(item))}'
+              style="background-color: #75767e; color: white;"
+              onMouseOver="this.style.backgroundColor ='#999999'"
+              onMouseOut="this.style.backgroundColor ='#75767e'">
               ${categoryTitle}
             </div>
-            <div class="${styles.bbBroadcastTitle}"
-              data-spItem='${escape(JSON.stringify(item))}'>
+            <div class="bbBroadcastTitle"
+              data-spItem='${escape(JSON.stringify(item))}'
+              style="background-color: #888888; color: white;"
+              onMouseOver="this.style.backgroundColor ='#999999'"
+              onMouseOut="this.style.backgroundColor ='#888888'">
               ${item.Title}
             </div>
           </div>
@@ -156,6 +164,10 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
     SPComponentLoader.loadCss('https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/css/fabric.components.min.css');
     SPComponentLoader.loadCss('https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/css/fabric.min.css');
     
+    //Load CSS for Broadcast WP
+    SPComponentLoader.loadCss('https://blueboxsolutionsdev.sharepoint.com/teams/devs_318_bbstyling/_catalogs/masterpage/Bluebox/webparts/broadcast/broadcast.css');
+    SPComponentLoader.loadCss('https://blueboxsolutionsdev.sharepoint.com/teams/devs_318_bbstyling/_catalogs/masterpage/Bluebox/webparts/bulletin/bulletinPopup1.css');
+
     this.domElement.innerHTML = `
       <div class="${ styles.broadcastAnnouncements }">
         <div class="${ styles.container }">
