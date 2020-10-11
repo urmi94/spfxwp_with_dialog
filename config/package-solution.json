@@ -4,7 +4,7 @@
     "name": "broadcast-announcements-client-side-solution",
     "id": "8cc84244-89a6-4078-b7e2-ff11a5666035",
     "version": "1.0.0.0",
-    "includeClientSideAssets": true,
+    "includeClientSideAssets": false, 
     "isDomainIsolated": false,
     "developer": {
       "name": "",

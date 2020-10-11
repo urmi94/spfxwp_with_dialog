@@ -10,11 +10,17 @@ import { SPComponentLoader } from '@microsoft/sp-loader';
 
 import * as $ from 'jquery';
 require('jQuery.vTicker');
+require('Bluebox.Broadcast');
 
 import AnnouncementDetailsDialog from './AnnouncementDetailsDialog';
 import AnnouncementListDialog from './AnnouncementListDialog';
 
 declare var jQuery:any;
+declare var Bluebox:any;
+
+var option: any = {
+  HtmlId: "bbBroadcast"
+};
 
 export interface IBroadcastAnnouncementsWebPartProps {
   description: string;
@@ -55,27 +61,30 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
 
   private _renderData(data: ISPListItem[]): void {
     let html: string = '';
-    let renderItemsHtml = this._renderItems(data);
+    let renderItemsHtml = [];
+    Bluebox.Broadcast2.RenderItems(option, data, renderItemsHtml, true);//this._renderItems(data);
+    console.log(renderItemsHtml);
 
     //Render		
     if (data.length > 0) {
-      html += `
-        <div class="bbBroadcast ${styles.row}">
-          <div class="bbBroadcastCount ${styles.column}"
-            style="color: white;">
-            <a class="bbBroadcastCountLink"
-              onMouseOver="this.style.backgroundColor ='#999999'"
-              onMouseOut="this.style.backgroundColor ='#555'">
-              <i class="fa fa-exclamation-triangle"></i>
-              ${data.length}
-            </a>
-          </div>
-          <div id="bbBroadcastContentTicker" style="width:100% !important"
-             class="bbBroadcastContentTicker ${styles.column}">
-            <ul class="bbBroadcastContent">` + renderItemsHtml + `</ul>
-          </div>
-        </div>
-        `;
+      html += Bluebox.Broadcast2.RenderData(option,data);
+      // `
+      //   <div class="bbBroadcast ${styles.row}">
+      //     <div class="bbBroadcastCount ${styles.column}"
+      //       style="color: white;">
+      //       <a class="bbBroadcastCountLink"
+      //         onMouseOver="this.style.backgroundColor ='#999999'"
+      //         onMouseOut="this.style.backgroundColor ='#555'">
+      //         <i class="fa fa-exclamation-triangle"></i>
+      //         ${data.length}
+      //       </a>
+      //     </div>
+      //     <div id="bbBroadcastContentTicker" style="width:100% !important"
+      //        class="bbBroadcastContentTicker ${styles.column}">
+      //       <ul class="bbBroadcastContent">` + renderItemsHtml + `</ul>
+      //     </div>
+      //   </div>
+      //   `;
     }
     const root: Element = this.domElement.querySelector('#spListContainer');
     root.innerHTML = html;
@@ -84,17 +93,18 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
     var self = this;
     $( "[class^='bbBroadcastSeverity'], [class^='bbBroadcastTitle']" ).each(function(index) {
       $(this).on("click", function(){
-          var spItem = $(this).data('spitem');
+          var spItem = data[index];          
           self.showAnnouncementDetails(spItem);        
       });
-    }); 
+    });
+    
     
     $( "[class^='bbBroadcastCount'], [class^='bbBroadcastCountLink']" ).on("click", () => {
-          self._showAnnouncementList(renderItemsHtml);        
+          self._showAnnouncementList(data, renderItemsHtml);        
       });
 
     //Apply vTicker
-    $( "[class^='bbBroadcastContentTicker']" ).on("load",jQuery('#bbBroadcastContentTicker').vTicker({ height: 45 }));
+    $( "[class^='bbBroadcastContentTicker']" ).on("load",jQuery('.bbBroadcastContentTicker').vTicker({ height: 45 }));
       
   }   
 
@@ -148,13 +158,15 @@ export default class BroadcastAnnouncementsWebPart extends BaseClientSideWebPart
 
   public showAnnouncementDetails(item): void { 
     const dialog: AnnouncementDetailsDialog = new AnnouncementDetailsDialog();  
-    dialog.item = item;  
+    // dialog.item = item;  
+    dialog.html = Bluebox.Broadcast2.ShowModernBroadcastDetailsPopup(item);
     dialog.render(); 
   }
 
-  private _showAnnouncementList(renderItemsHtml): void { 
+  private _showAnnouncementList(data, renderItemsHtml): void { 
 
-    const dialog: AnnouncementListDialog = new AnnouncementListDialog();  
+    const dialog: AnnouncementListDialog = new AnnouncementListDialog(); 
+    dialog.data = data; 
     dialog.renderItemsHtml = renderItemsHtml;     
     dialog.render(); 
   }

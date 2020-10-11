@@ -21,7 +21,22 @@
     "globalName": "jQuery.vTicker",
     "globalDependencies": ["jquery"]
     },
-    "fabric": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/js/fabric.min.js"
+    "fabric": "https://static2.sharepointonline.com/files/fabric/office-ui-fabric-js/1.4.0/js/fabric.min.js",
+    "Bluebox.Broadcast" : {
+      "path": "https://bbxclientsdevstoragecdn.blob.core.windows.net/urmi-broadcast/Broadcast.js",
+      "globalName": "Bluebox.Broadcast",
+      "globalDependencies": ["jquery"]
+    },
+    "Bluebox.Util" : {
+      "path": "https://blueboxsolutionsdev.sharepoint.com/teams/devs_318_bbstyling/_catalogs/masterpage/Bluebox/scripts/Bluebox.Util.js",
+      "globalName": "Bluebox.Util",
+      "globalDependencies": ["jquery"]
+    },
+    "Bluebox.Loader" : {
+      "path": "https://blueboxsolutionsdev.sharepoint.com/teams/devs_318_bbstyling/_catalogs/masterpage/Bluebox/scripts/Bluebox.Loader.js",
+      "globalName": "Bluebox.Loader",
+      "globalDependencies": ["jquery"]
+    }
   },
   "localizedResources": {
     "BroadcastAnnouncementsWebPartStrings": "lib/webparts/broadcastAnnouncements/loc/{locale}.js",
